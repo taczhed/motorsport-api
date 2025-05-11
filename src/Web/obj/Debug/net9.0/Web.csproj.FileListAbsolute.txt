@@ -52,3 +52,5 @@ C:\Users\taczhed\source\repos\MotorsportApi\src\Web\obj\Debug\net9.0\refint\Web.
 C:\Users\taczhed\source\repos\MotorsportApi\src\Web\obj\Debug\net9.0\Web.pdb
 C:\Users\taczhed\source\repos\MotorsportApi\src\Web\obj\Debug\net9.0\Web.genruntimeconfig.cache
 C:\Users\taczhed\source\repos\MotorsportApi\src\Web\obj\Debug\net9.0\ref\Web.dll
+C:\Users\taczhed\source\repos\MotorsportApi\src\Web\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\taczhed\source\repos\MotorsportApi\src\Web\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll

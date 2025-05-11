@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MotorsportApi.Infrastructure;
 using MotorsportApi.Domain.Entities;
 
-namespace MotorsportApi.API.Controllers;
+namespace MotorsportApi.Web.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
