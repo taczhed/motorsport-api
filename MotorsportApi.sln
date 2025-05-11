@@ -13,6 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "src\Infra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "src\Web\Web.csproj", "{5D816CA9-F53D-4C94-9D31-B4227E5FCCB7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,5 +85,8 @@ Global
 		{29139281-936D-4A1B-8048-A8EC5F457D8E} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{60277FA8-39AE-4A06-A620-5FFD20B11BD0} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{5D816CA9-F53D-4C94-9D31-B4227E5FCCB7} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {618058F4-1281-426A-B981-BFF897EFBFFC}
 	EndGlobalSection
 EndGlobal
