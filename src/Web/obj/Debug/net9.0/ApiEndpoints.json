@@ -237,6 +237,74 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "MotorsportApi.API.Controllers.RacesController",
+    "Method": "AddDriverToRace",
+    "RelativePath": "api/Races/{raceId}/drivers",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "raceId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "driverRace",
+        "Type": "MotorsportApi.Domain.Entities.DriverRace",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MotorsportApi.API.Controllers.RacesController",
+    "Method": "UpdateDriverResult",
+    "RelativePath": "api/Races/{raceId}/drivers/{driverId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "raceId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "driverId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "update",
+        "Type": "MotorsportApi.Domain.Entities.DriverRace",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MotorsportApi.API.Controllers.RacesController",
+    "Method": "RemoveDriverFromRace",
+    "RelativePath": "api/Races/{raceId}/drivers/{driverId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "raceId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "driverId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "MotorsportApi.API.Controllers.TracksController",
     "Method": "GetAll",
     "RelativePath": "api/Tracks",

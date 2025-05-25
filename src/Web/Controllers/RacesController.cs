@@ -84,4 +84,57 @@ public class RacesController : ControllerBase
 
         return NoContent();
     }
+
+    // POST: api/races/{raceId}/drivers
+    [HttpPost("{raceId}/drivers")]
+    public async Task<IActionResult> AddDriverToRace(int raceId, [FromBody] DriverRace driverRace)
+    {
+        var race = await _context.Races.FindAsync(raceId);
+        if (race == null) return NotFound($"Race {raceId} not found.");
+
+        var driverExists = await _context.Drivers.AnyAsync(d => d.Id == driverRace.DriverId);
+        if (!driverExists) return BadRequest($"Driver {driverRace.DriverId} does not exist.");
+
+        // Unikalność: tylko jeden wpis na kierowcę i wyścig
+        var exists = await _context.DriverRaces.AnyAsync(dr =>
+            dr.RaceId == raceId && dr.DriverId == driverRace.DriverId);
+        if (exists) return Conflict("Driver already assigned to this race.");
+
+        driverRace.RaceId = raceId;
+
+        _context.DriverRaces.Add(driverRace);
+        await _context.SaveChangesAsync();
+
+        return Ok(driverRace);
+    }
+
+    // PUT: api/races/{raceId}/drivers/{driverId}
+    [HttpPut("{raceId}/drivers/{driverId}")]
+    public async Task<IActionResult> UpdateDriverResult(int raceId, int driverId, [FromBody] DriverRace update)
+    {
+        var record = await _context.DriverRaces.FirstOrDefaultAsync(dr => dr.RaceId == raceId && dr.DriverId == driverId);
+
+        if (record == null) return NotFound("Result not found for given driver and race.");
+
+        record.Position = update.Position;
+        record.Time = update.Time;
+
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
+
+    // DELETE: api/races/{raceId}/drivers/{driverId}
+    [HttpDelete("{raceId}/drivers/{driverId}")]
+    public async Task<IActionResult> RemoveDriverFromRace(int raceId, int driverId)
+    {
+        var record = await _context.DriverRaces.FirstOrDefaultAsync(dr => dr.RaceId == raceId && dr.DriverId == driverId);
+
+        if (record == null) return NotFound("Driver is not assigned to this race.");
+
+        _context.DriverRaces.Remove(record);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
+
 }
