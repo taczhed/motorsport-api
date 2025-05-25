@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MotorsportApi.Infrastructure;
+using MotorsportApi.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,11 +9,26 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseInMemoryDatabase("MotorsportDb"));
 
 builder.Services.AddOpenApi();
-builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// FIXME: Make DTO with Automapper
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+        options.JsonSerializerOptions.WriteIndented = true;
+    });
+
 var app = builder.Build();
+
+// Data seed
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var seeder = new DataSeeder(dbContext);
+    await seeder.SeedAsync();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
