@@ -4,6 +4,7 @@ using MotorsportApi.Infrastructure;
 using MotorsportApi.Domain.Entities;
 using AutoMapper;
 using MotorsportApi.Application.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MotorsportApi.Web.Controllers;
 
@@ -49,6 +50,7 @@ public class CarsController : ControllerBase
     }
 
     // POST: api/cars
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CarDto carDto)
     {
@@ -66,6 +68,7 @@ public class CarsController : ControllerBase
     }
 
     // PUT: api/cars/5
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] CarDto updatedDto)
     {
@@ -79,6 +82,7 @@ public class CarsController : ControllerBase
     }
 
     // DELETE: api/cars/5
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

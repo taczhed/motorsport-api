@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MotorsportApi.Application.DTOs;
@@ -49,6 +50,7 @@ public class TracksController : ControllerBase
     }
 
     // POST: api/tracks
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] TrackDto trackDto)
     {
@@ -60,6 +62,7 @@ public class TracksController : ControllerBase
     }
 
     // PUT: api/tracks/5
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] TrackDto updatedDto)
     {
@@ -73,6 +76,7 @@ public class TracksController : ControllerBase
     }
 
     // DELETE: api/tracks/5
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

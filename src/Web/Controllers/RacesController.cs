@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MotorsportApi.Application.DTOs;
@@ -53,6 +54,7 @@ public class RacesController : ControllerBase
     }
 
     // POST: api/races
+    [Authorize(Roles = "Admin,RaceManager")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] RaceDto raceDto)
     {
@@ -67,6 +69,7 @@ public class RacesController : ControllerBase
     }
 
     // PUT: api/races/5
+    [Authorize(Roles = "Admin,RaceManager")]
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] RaceDto updatedDto)
     {
@@ -80,6 +83,7 @@ public class RacesController : ControllerBase
     }
 
     // DELETE: api/races/5
+    [Authorize(Roles = "Admin,RaceManager")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
@@ -93,6 +97,7 @@ public class RacesController : ControllerBase
     }
 
     // POST: api/races/{raceId}/drivers
+    [Authorize(Roles = "Admin,RaceManager")]
     [HttpPost("{raceId}/drivers")]
     public async Task<IActionResult> AddDriverToRace(int raceId, [FromBody] DriverRaceDto driverRaceDto)
     {
@@ -117,6 +122,7 @@ public class RacesController : ControllerBase
     }
 
     // PUT: api/races/{raceId}/drivers/{driverId}
+    [Authorize(Roles = "Admin,RaceManager")]
     [HttpPut("{raceId}/drivers/{driverId}")]
     public async Task<IActionResult> UpdateDriverResult(int raceId, int driverId, [FromBody] DriverRaceDto updateDto)
     {
@@ -132,6 +138,7 @@ public class RacesController : ControllerBase
     }
 
     // DELETE: api/races/{raceId}/drivers/{driverId}
+    [Authorize(Roles = "Admin,RaceManager")]
     [HttpDelete("{raceId}/drivers/{driverId}")]
     public async Task<IActionResult> RemoveDriverFromRace(int raceId, int driverId)
     {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MotorsportApi.Web.Middleware;
 
 namespace MotorsportApi.Web.Controllers;
@@ -8,6 +9,7 @@ namespace MotorsportApi.Web.Controllers;
 public class StatsController : ControllerBase
 {
     // GET: api/stats
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public IActionResult GetStats()
     {
