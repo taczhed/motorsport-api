@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using MotorsportApi.Infrastructure;
 using MotorsportApi.Domain.Entities;
+using AutoMapper;
+using MotorsportApi.Application.DTOs;
 
 namespace MotorsportApi.Web.Controllers;
 
@@ -10,10 +12,12 @@ namespace MotorsportApi.Web.Controllers;
 public class DriversController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public DriversController(ApplicationDbContext context)
+    public DriversController(ApplicationDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     // GET: api/drivers
@@ -23,9 +27,11 @@ public class DriversController : ControllerBase
         var drivers = await _context.Drivers
             .Include(d => d.Car)
             .Include(d => d.DriverRaces)
+            .ThenInclude(dr => dr.Race)
             .ToListAsync();
 
-        return Ok(drivers);
+        var driverDtos = _mapper.Map<List<DriverDto>>(drivers);
+        return Ok(driverDtos);
     }
 
     // GET: api/drivers/5
@@ -35,33 +41,34 @@ public class DriversController : ControllerBase
         var driver = await _context.Drivers
             .Include(d => d.Car)
             .Include(d => d.DriverRaces)
+            .ThenInclude(dr => dr.Race)
             .FirstOrDefaultAsync(d => d.Id == id);
 
         if (driver == null) return NotFound();
 
-        return Ok(driver);
+        var driverDto = _mapper.Map<DriverDto>(driver);
+        return Ok(driverDto);
     }
 
     // POST: api/drivers
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] Driver driver)
+    public async Task<IActionResult> Create([FromBody] DriverDto driverDto)
     {
+        var driver = _mapper.Map<Driver>(driverDto);
         _context.Drivers.Add(driver);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetById), new { id = driver.Id }, driver);
+        return CreatedAtAction(nameof(GetById), new { id = driver.Id }, _mapper.Map<DriverDto>(driver));
     }
 
     // PUT: api/drivers/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, [FromBody] Driver updated)
+    public async Task<IActionResult> Update(int id, [FromBody] DriverDto updatedDto)
     {
         var driver = await _context.Drivers.FindAsync(id);
         if (driver == null) return NotFound();
 
-        driver.Name = updated.Name;
-        driver.Age = updated.Age;
-
+        _mapper.Map(updatedDto, driver);
         await _context.SaveChangesAsync();
         return NoContent();
     }

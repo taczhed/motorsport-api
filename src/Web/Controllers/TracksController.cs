@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MotorsportApi.Application.DTOs;
 using MotorsportApi.Domain.Entities;
 using MotorsportApi.Infrastructure;
 
@@ -10,10 +12,12 @@ namespace MotorsportApi.API.Controllers;
 public class TracksController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public TracksController(ApplicationDbContext context)
+    public TracksController(ApplicationDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     // GET: api/tracks
@@ -23,8 +27,10 @@ public class TracksController : ControllerBase
         var tracks = await _context.Tracks
             .Include(t => t.Races)
             .ToListAsync();
+        
+        var trackDtos = _mapper.Map<List<TrackDto>>(tracks);
 
-        return Ok(tracks);
+        return Ok(trackDtos);
     }
 
     // GET: api/tracks/5
@@ -37,29 +43,30 @@ public class TracksController : ControllerBase
 
         if (track == null) return NotFound();
 
-        return Ok(track);
+        var trackDto = _mapper.Map<TrackDto>(track);
+
+        return Ok(trackDto);
     }
 
     // POST: api/tracks
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] Track track)
+    public async Task<IActionResult> Create([FromBody] TrackDto trackDto)
     {
+        var track = _mapper.Map<Track>(trackDto);
         _context.Tracks.Add(track);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetById), new { id = track.Id }, track);
+        return CreatedAtAction(nameof(GetById), new { id = track.Id }, _mapper.Map<TrackDto>(track));
     }
 
     // PUT: api/tracks/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, [FromBody] Track updated)
+    public async Task<IActionResult> Update(int id, [FromBody] TrackDto updatedDto)
     {
         var track = await _context.Tracks.FindAsync(id);
         if (track == null) return NotFound();
 
-        track.Name = updated.Name;
-        track.Location = updated.Location;
-        track.LengthKm = updated.LengthKm;
+        _mapper.Map(updatedDto, track);
 
         await _context.SaveChangesAsync();
         return NoContent();

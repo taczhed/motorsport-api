@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MotorsportApi.Application.Mapping;
 using MotorsportApi.Infrastructure;
 using MotorsportApi.Infrastructure.Persistence;
 
@@ -8,17 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseInMemoryDatabase("MotorsportDb"));
 
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-// FIXME: Make DTO with Automapper
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-        options.JsonSerializerOptions.WriteIndented = true;
-    });
+builder.Services.AddControllers();
 
 var app = builder.Build();
 

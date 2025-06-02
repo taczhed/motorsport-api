@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using MotorsportApi.Infrastructure;
 using MotorsportApi.Domain.Entities;
+using AutoMapper;
+using MotorsportApi.Application.DTOs;
 
 namespace MotorsportApi.Web.Controllers;
 
@@ -10,10 +12,13 @@ namespace MotorsportApi.Web.Controllers;
 public class CarsController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public CarsController(ApplicationDbContext context)
+
+    public CarsController(ApplicationDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     // GET: api/cars
@@ -23,8 +28,9 @@ public class CarsController : ControllerBase
         var cars = await _context.Cars
             .Include(c => c.Driver)
             .ToListAsync();
+        var carDtos = _mapper.Map<List<CarDto>>(cars);
 
-        return Ok(cars);
+        return Ok(carDtos);
     }
 
     // GET: api/cars/5
@@ -37,34 +43,36 @@ public class CarsController : ControllerBase
 
         if (car == null) return NotFound();
 
-        return Ok(car);
+        var carDto = _mapper.Map<CarDto>(car);
+
+        return Ok(carDto);
     }
 
     // POST: api/cars
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] Car car)
+    public async Task<IActionResult> Create([FromBody] CarDto carDto)
     {
-  
-        var existingCar = await _context.Cars.FirstOrDefaultAsync(c => c.DriverId == car.DriverId);
+
+        var existingCar = await _context.Cars.FirstOrDefaultAsync(c => c.DriverId == carDto.DriverId);
         if (existingCar != null) return BadRequest("This driver already has a car.");
+
+        var car = _mapper.Map<Car>(carDto);
 
         _context.Cars.Add(car);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetById), new { id = car.Id }, car);
+        var createdDto = _mapper.Map<CarDto>(car);
+        return CreatedAtAction(nameof(GetById), new { id = car.Id }, createdDto);
     }
 
     // PUT: api/cars/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, [FromBody] Car updated)
+    public async Task<IActionResult> Update(int id, [FromBody] CarDto updatedDto)
     {
         var car = await _context.Cars.FindAsync(id);
         if (car == null) return NotFound();
 
-        car.Brand = updated.Brand;
-        car.Model = updated.Model;
-        car.Number = updated.Number;
-        car.DriverId = updated.DriverId;
+        _mapper.Map(updatedDto, car);
 
         await _context.SaveChangesAsync();
         return NoContent();
