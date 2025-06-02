@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using MotorsportApi.Application.Mapping;
 using MotorsportApi.Infrastructure;
 using MotorsportApi.Infrastructure.Persistence;
+using MotorsportApi.Web.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<RequestCountingMiddleware>();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
