@@ -5,10 +5,13 @@ using Microsoft.OpenApi.Models;
 using MotorsportApi.Application.Mapping;
 using MotorsportApi.Infrastructure;
 using MotorsportApi.Infrastructure.Persistence;
-using MotorsportApi.Web.Middleware;
+using MotorsportApi.Api.Middleware;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Razor Pages
+builder.Services.AddRazorPages();
 
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("MotorsportDb"));
@@ -44,6 +47,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// GraphQL
 builder.Services
     .AddGraphQLServer()
     .AddQueryType<Query>()
@@ -89,7 +93,10 @@ using (var scope = app.Services.CreateScope())
 app.MapGraphQL("/graphql");
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseRouting();
 app.UseMiddleware<RequestCountingMiddleware>();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapRazorPages();
 app.Run();
