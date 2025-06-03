@@ -54,7 +54,7 @@ public class DriversController : ControllerBase
     // POST: api/drivers
     [Authorize(Roles = "Admin")]
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] DriverDto driverDto)
+    public async Task<IActionResult> Create([FromBody] DriverInputDto driverDto)
     {
         var driver = _mapper.Map<Driver>(driverDto);
         _context.Drivers.Add(driver);
@@ -66,7 +66,7 @@ public class DriversController : ControllerBase
     // PUT: api/drivers/5
     [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, [FromBody] DriverDto updatedDto)
+    public async Task<IActionResult> Update(int id, [FromBody] DriverInputDto updatedDto)
     {
         var driver = await _context.Drivers.FindAsync(id);
         if (driver == null) return NotFound();

@@ -52,7 +52,7 @@ public class TracksController : ControllerBase
     // POST: api/tracks
     [Authorize(Roles = "Admin")]
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] TrackDto trackDto)
+    public async Task<IActionResult> Create([FromBody] TrackInputDto trackDto)
     {
         var track = _mapper.Map<Track>(trackDto);
         _context.Tracks.Add(track);
@@ -64,7 +64,7 @@ public class TracksController : ControllerBase
     // PUT: api/tracks/5
     [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, [FromBody] TrackDto updatedDto)
+    public async Task<IActionResult> Update(int id, [FromBody] TrackInputDto updatedDto)
     {
         var track = await _context.Tracks.FindAsync(id);
         if (track == null) return NotFound();

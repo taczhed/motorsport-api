@@ -8,18 +8,29 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<Car, CarDto>().ReverseMap();
-        CreateMap<Driver, DriverDto>().ReverseMap();
-        CreateMap<Track, TrackDto>().ReverseMap();
-        CreateMap<DriverRace, DriverRaceDto>().ReverseMap();
+        // Car
+        CreateMap<Car, CarDto>();
+        CreateMap<Car, CarBasicDto>();
+        CreateMap<CarInputDto, Car>();
+
+        // Driver
+        CreateMap<Driver, DriverDto>();
+        CreateMap<Driver, DriverBasicDto>();
+        CreateMap<DriverInputDto, Driver>();
+
+        // Track
+        CreateMap<Track, TrackDto>();
+        CreateMap<TrackInputDto, Track>();
+
+        // DriverRace
+        CreateMap<DriverRaceInputDto, DriverRace>();
+        CreateMap<DriverRace, DriverRaceDto>()
+            .ForMember(dest => dest.Driver, opt => opt.MapFrom(src => src.Driver));
+
+        // Race
+        CreateMap<RaceInputDto, Race>();
         CreateMap<Race, RaceDto>()
-            .ForMember(dest => dest.Drivers, opt => opt.MapFrom(src =>
-                src.DriverRaces.Select(dr => new DriverRaceDto
-                {
-                    Id = dr.Driver.Id,
-                    Name = dr.Driver.Name,
-                    Position = dr.Position,
-                    Time = dr.Time
-                })));
+            .ForMember(dest => dest.Track, opt => opt.MapFrom(src => src.Track))
+            .ForMember(dest => dest.Drivers, opt => opt.MapFrom(src => src.DriverRaces));
     }
 }

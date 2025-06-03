@@ -10,3 +10,10 @@ public class RaceDto
 
     public List<DriverRaceDto> Drivers { get; set; }
 }
+
+public class RaceInputDto
+{
+    public string Name { get; set; }
+    public DateTime Date { get; set; }
+    public int TrackId { get; set; }
+}

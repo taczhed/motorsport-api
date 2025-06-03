@@ -56,10 +56,10 @@ public class RacesController : ControllerBase
     // POST: api/races
     [Authorize(Roles = "Admin,RaceManager")]
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] RaceDto raceDto)
+    public async Task<IActionResult> Create([FromBody] RaceInputDto raceDto)
     {
-        var trackExists = await _context.Tracks.AnyAsync(t => t.Id == raceDto.Track.Id);
-        if (!trackExists) return BadRequest($"Track with ID {raceDto.Track.Id} does not exist.");
+        var trackExists = await _context.Tracks.AnyAsync(t => t.Id == raceDto.TrackId);
+        if (!trackExists) return BadRequest($"Track with ID {raceDto.TrackId} does not exist.");
 
         var race = _mapper.Map<Race>(raceDto);
         _context.Races.Add(race);
@@ -71,7 +71,7 @@ public class RacesController : ControllerBase
     // PUT: api/races/5
     [Authorize(Roles = "Admin,RaceManager")]
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, [FromBody] RaceDto updatedDto)
+    public async Task<IActionResult> Update(int id, [FromBody] RaceInputDto updatedDto)
     {
         var race = await _context.Races.FindAsync(id);
         if (race == null) return NotFound();
@@ -99,17 +99,17 @@ public class RacesController : ControllerBase
     // POST: api/races/{raceId}/drivers
     [Authorize(Roles = "Admin,RaceManager")]
     [HttpPost("{raceId}/drivers")]
-    public async Task<IActionResult> AddDriverToRace(int raceId, [FromBody] DriverRaceDto driverRaceDto)
+    public async Task<IActionResult> AddDriverToRace(int raceId, [FromBody] DriverRaceInputDto driverRaceDto)
     {
         if (!await _context.Races.AnyAsync(r => r.Id == raceId))
             return NotFound($"Race with ID {raceId} not found.");
 
-        if (!await _context.Drivers.AnyAsync(d => d.Id == driverRaceDto.Id)) 
-            return BadRequest($"Driver with ID {driverRaceDto.Id} does not exist.");
+        if (!await _context.Drivers.AnyAsync(d => d.Id == driverRaceDto.DriverId)) 
+            return BadRequest($"Driver with ID {driverRaceDto.DriverId} does not exist.");
 
         // Unikalność: tylko jeden wpis na kierowcę i wyścig
         var exists = await _context.DriverRaces.AnyAsync(dr => 
-            dr.RaceId == raceId && dr.DriverId == driverRaceDto.Id);
+            dr.RaceId == raceId && dr.DriverId == driverRaceDto.DriverId);
         if (exists) return Conflict("Driver already assigned to this race.");
 
         var entity = _mapper.Map<DriverRace>(driverRaceDto);
@@ -124,7 +124,7 @@ public class RacesController : ControllerBase
     // PUT: api/races/{raceId}/drivers/{driverId}
     [Authorize(Roles = "Admin,RaceManager")]
     [HttpPut("{raceId}/drivers/{driverId}")]
-    public async Task<IActionResult> UpdateDriverResult(int raceId, int driverId, [FromBody] DriverRaceDto updateDto)
+    public async Task<IActionResult> UpdateDriverResult(int raceId, int driverId, [FromBody] DriverRaceInputDto updateDto)
     {
         var record = await _context.DriverRaces.FirstOrDefaultAsync(dr => dr.RaceId == raceId && dr.DriverId == driverId);
 

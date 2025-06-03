@@ -1,10 +1,22 @@
 ﻿namespace MotorsportApi.Application.DTOs;
 
-public class CarDto
+public class CarInputDto
+{
+    public string Brand { get; set; }
+    public string Model { get; set; }
+    public string Number { get; set; }
+    public int DriverId { get; set; }
+}
+
+public class CarBasicDto
 {
     public int Id { get; set; }
-    public string Brand { get; set; } = string.Empty;
-    public string Model { get; set; } = string.Empty;
-    public string Number { get; set; } = string.Empty;
-    public int DriverId { get; set; }
+    public string Brand { get; set; }
+    public string Model { get; set; }
+    public string Number { get; set; }
+}
+
+public class CarDto : CarBasicDto
+{
+    public DriverBasicDto Driver { get; set; }
 }

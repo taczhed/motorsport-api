@@ -52,7 +52,7 @@ public class CarsController : ControllerBase
     // POST: api/cars
     [Authorize(Roles = "Admin")]
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CarDto carDto)
+    public async Task<IActionResult> Create([FromBody] CarInputDto carDto)
     {
 
         var existingCar = await _context.Cars.FirstOrDefaultAsync(c => c.DriverId == carDto.DriverId);
@@ -70,8 +70,11 @@ public class CarsController : ControllerBase
     // PUT: api/cars/5
     [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, [FromBody] CarDto updatedDto)
+    public async Task<IActionResult> Update(int id, [FromBody] CarInputDto updatedDto)
     {
+        var existingCar = await _context.Cars.FirstOrDefaultAsync(c => c.DriverId == updatedDto.DriverId);
+        if (existingCar != null) return BadRequest($"This driver already has a car.");
+
         var car = await _context.Cars.FindAsync(id);
         if (car == null) return NotFound();
 
