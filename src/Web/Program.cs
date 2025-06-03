@@ -44,6 +44,13 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<Query>()
+    .AddProjections()
+    .AddFiltering()
+    .AddSorting();
+
 // JWT Auth
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 
@@ -79,8 +86,7 @@ using (var scope = app.Services.CreateScope())
     await seeder.SeedAsync();
 }
 
-
-
+app.MapGraphQL("/graphql");
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseMiddleware<RequestCountingMiddleware>();
