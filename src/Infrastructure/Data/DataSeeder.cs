@@ -29,7 +29,6 @@ public class DataSeeder
             new() { Brand = "Ferrari", Model = "SF25", Number = "44", Driver = drivers[0] },
             new() { Brand = "Red Bull", Model = "RB19", Number = "1", Driver = drivers[1] },
             new() { Brand = "Aston Martin", Model = "AMR23", Number = "14", Driver = drivers[2] },
-            new() { Brand = "Ferrari", Model = "SF25", Number = "25", Driver = drivers[3] },
         };
 
         var tracks = new List<Track>

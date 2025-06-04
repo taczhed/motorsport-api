@@ -18,7 +18,14 @@ public class ApplicationDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // Driver <-> Car (1:1)
+        // Car <-> Driver (1:1)
+        modelBuilder.Entity<Car>()
+            .HasOne(c => c.Driver)
+            .WithOne(d => d.Car)
+            .HasForeignKey<Car>(c => c.DriverId)
+            .IsRequired();
+
+        // Driver <-> Car (1:1 - optional)
         modelBuilder.Entity<Driver>()
             .HasOne(d => d.Car)
             .WithOne(c => c.Driver)

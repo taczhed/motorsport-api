@@ -3,7 +3,6 @@
 public class DriverRaceInputDto
 {
     public int DriverId { get; set; }
-    public string DriverName { get; set; }
     public int? Position { get; set; }
     public TimeSpan? Time { get; set; }
 }

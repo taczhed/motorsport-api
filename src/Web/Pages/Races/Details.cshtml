@@ -1,0 +1,58 @@
+﻿@page
+@model Web.Pages.Races.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Race</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Race.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Race.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Race.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Race.Date)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Race.Track)
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.Track.Name
+        </dd>
+    </dl>
+
+    <h4>Drivers</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Driver</th>
+                <th>Position</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var driver in (IEnumerable<dynamic>)ViewData["Drivers"])
+            {
+                <tr>
+                    <td>@driver.Name</td>
+                    <td>@driver.Position</td>
+                    <td>@driver.Time.ToString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Race.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
