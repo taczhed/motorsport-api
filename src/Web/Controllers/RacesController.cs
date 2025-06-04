@@ -6,7 +6,7 @@ using MotorsportApi.Application.DTOs;
 using MotorsportApi.Domain.Entities;
 using MotorsportApi.Infrastructure;
 
-namespace MotorsportApi.Api.Controllers;
+namespace MotorsportApi.Web.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

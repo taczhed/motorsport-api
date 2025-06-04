@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using MotorsportApi.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using MotorsportApi.Infrastructure;
+using MotorsportApi.Domain.Entities;
 
-namespace Web.Pages.Tracks
+namespace MotorsportApi.Web.Pages.Tracks
 {
+    [Authorize(Roles = "Admin")]
     public class DetailsModel : PageModel
     {
-        private readonly MotorsportApi.Infrastructure.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public DetailsModel(MotorsportApi.Infrastructure.ApplicationDbContext context)
+        public DetailsModel(ApplicationDbContext context)
         {
             _context = context;
         }

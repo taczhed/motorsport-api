@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using MotorsportApi.Domain.Entities;
 using MotorsportApi.Infrastructure;
 
-namespace Web.Pages.Races
+namespace MotorsportApi.Web.Pages.Races
 {
+    [Authorize(Roles = "Admin,RaceManager")]
     public class DeleteModel : PageModel
     {
-        private readonly MotorsportApi.Infrastructure.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public DeleteModel(MotorsportApi.Infrastructure.ApplicationDbContext context)
+        public DeleteModel(ApplicationDbContext context)
         {
             _context = context;
         }

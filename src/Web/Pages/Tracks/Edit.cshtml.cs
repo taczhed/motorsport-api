@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MotorsportApi.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using MotorsportApi.Infrastructure;
+using MotorsportApi.Domain.Entities;
 
-namespace Web.Pages.Tracks
+namespace MotorsportApi.Web.Pages.Tracks
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
-        private readonly MotorsportApi.Infrastructure.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public EditModel(MotorsportApi.Infrastructure.ApplicationDbContext context)
+        public EditModel(ApplicationDbContext context)
         {
             _context = context;
         }

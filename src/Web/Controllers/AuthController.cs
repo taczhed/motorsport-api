@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace MotorsportApi.Api.Controllers;
+namespace MotorsportApi.Web.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

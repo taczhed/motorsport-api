@@ -6,7 +6,7 @@ using AutoMapper;
 using MotorsportApi.Application.DTOs;
 using Microsoft.AspNetCore.Authorization;
 
-namespace MotorsportApi.Api.Controllers;
+namespace MotorsportApi.Web.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

@@ -1,4 +1,4 @@
-﻿namespace MotorsportApi.Api.Middleware
+﻿namespace MotorsportApi.Web.Middleware
 {
     public class RequestCountingMiddleware
     {
