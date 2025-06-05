@@ -22,6 +22,7 @@ public class DataSeeder
             new() { Name = "Max Verstappen", Age = 26 },
             new() { Name = "Fernando Alosno", Age = 42 },
             new() { Name = "Robert Kubica", Age = 40 },
+            new() { Name = "Tomasz Lech", Age = 22 },
         };
 
         var cars = new List<Car>

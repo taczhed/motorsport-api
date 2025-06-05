@@ -6,7 +6,7 @@ using AutoMapper;
 using MotorsportApi.Application.DTOs;
 using Microsoft.AspNetCore.Authorization;
 
-namespace MotorsportApi.Api.Controllers;
+namespace MotorsportApi.Web.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -56,6 +56,9 @@ public class CarsController : ControllerBase
     {
 
         var existingCar = await _context.Cars.FirstOrDefaultAsync(c => c.DriverId == carDto.DriverId);
+
+        Console.WriteLine(existingCar);
+
         if (existingCar != null) return BadRequest("This driver already has a car.");
 
         var car = _mapper.Map<Car>(carDto);
@@ -73,7 +76,7 @@ public class CarsController : ControllerBase
     public async Task<IActionResult> Update(int id, [FromBody] CarInputDto updatedDto)
     {
         var existingCar = await _context.Cars.FirstOrDefaultAsync(c => c.DriverId == updatedDto.DriverId);
-        if (existingCar != null) return BadRequest($"This driver already has a car.");
+        if (existingCar != null) return BadRequest("This driver already has a car.");
 
         var car = await _context.Cars.FindAsync(id);
         if (car == null) return NotFound();
