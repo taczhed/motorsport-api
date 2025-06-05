@@ -6,16 +6,17 @@ using MotorsportApi.Tests.Helpers;
 
 namespace MotorsportApi.Tests.Controllers
 {
+    [Collection("ApiCollection")]
     public class CarsControllerTests
     {
         private readonly HttpClient _client;
         private readonly AuthClient _auth;
 
-        public CarsControllerTests()
+        public CarsControllerTests(MotorsportApiWebApplicationFactory factory)
         {
             var app = new MotorsportApiWebApplicationFactory();
 
-            _client = app.CreateClient();
+            _client = factory.CreateClient();
             _auth = new AuthClient();
         }
 

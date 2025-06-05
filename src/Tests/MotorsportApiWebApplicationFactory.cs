@@ -8,7 +8,7 @@ using MotorsportApi.Infrastructure;
 
 namespace MotorsportApi.Tests
 {
-    internal class MotorsportApiWebApplicationFactory: WebApplicationFactory<Program>
+    public class MotorsportApiWebApplicationFactory: WebApplicationFactory<Program>
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -30,4 +30,7 @@ namespace MotorsportApi.Tests
             });
         }
     }
+
+    [CollectionDefinition("ApiCollection")]
+    public class ApiCollection : ICollectionFixture<MotorsportApiWebApplicationFactory> { }
 }
