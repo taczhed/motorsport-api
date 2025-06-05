@@ -9,7 +9,7 @@ public static class TokenGenerator
 {
     public static string GenerateToken(string username, string role)
     {
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ThisIsASecretKeyForTestsOnly123!"));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("i81xZq9t5wUn4KfbDbJcN7WqYPLDqVhL9LCRF7U4xFg!"));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var claims = new[]

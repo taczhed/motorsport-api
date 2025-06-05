@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MotorsportApi.Web.Middleware;
+using MotorsportApi.Api.Middleware;
 
-namespace MotorsportApi.Web.Controllers;
+namespace MotorsportApi.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

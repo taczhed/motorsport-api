@@ -19,8 +19,6 @@ namespace MotorsportApi.Tests.Controllers
             _auth = new AuthClient();
         }
 
-        // start
-
         [Fact]
         public async Task GetCars_ReturnsOk()
         {
@@ -70,7 +68,7 @@ namespace MotorsportApi.Tests.Controllers
 
             var response = await _client.SendAsync(request);
 
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            response.StatusCode.Should().Be(HttpStatusCode.Created);
             var car = await response.Content.ReadFromJsonAsync<CarDto>();
             car!.Brand.Should().Be("TestBrand");
         }
