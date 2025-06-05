@@ -111,7 +111,6 @@ public class TracksControllerTests
     {
         var token = await _auth.GetTokenAsync();
 
-        // najpierw utwórz tor
         var create = new HttpRequestMessage(HttpMethod.Post, "/api/tracks");
         create.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
         create.Content = JsonContent.Create(new TrackInputDto
@@ -124,7 +123,6 @@ public class TracksControllerTests
         var created = await _client.SendAsync(create);
         var track = await created.Content.ReadFromJsonAsync<TrackDto>();
 
-        // teraz go usuń
         var delete = new HttpRequestMessage(HttpMethod.Delete, $"/api/tracks/{track!.Id}");
         delete.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
