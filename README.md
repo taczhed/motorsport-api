@@ -59,6 +59,16 @@ dotnet run --project src/Web/Web.csproj
   - Login: `manager`
   - Password: `manager`
 
+### Run the Tests
+
+```bash
+dotnet test src/Tests/Tests.csproj
+```
+
+```bash
+/src/Tests/curl_test.sh
+```
+
 ## Technologies Used
 
 - **.NET 9 / ASP.NET Core**
