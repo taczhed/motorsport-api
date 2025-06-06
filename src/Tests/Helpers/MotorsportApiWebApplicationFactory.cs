@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using MotorsportApi.Infrastructure;
 
-namespace MotorsportApi.Tests
+namespace MotorsportApi.Tests.Helpers
 {
     public class MotorsportApiWebApplicationFactory: WebApplicationFactory<Program>
     {
