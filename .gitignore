@@ -1,2 +1,39 @@
-.vs
-.idea
+# Build output directories
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio workspace settings
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+riderModule.iml
+*.userprefs
+_ReSharper*/
+
+# VS Code
+.vscode/
+
+# Test results and logs
+TestResults/
+*.log
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# NuGet packages (legacy)
+packages/
+
+# Local databases (if any)
+*.mdf
+*.sqlite
+*.db
+
+# OS generated files
+*.DS_Store
+Thumbs.db
